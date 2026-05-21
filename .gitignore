@@ -1,0 +1,21 @@
+#Data and raw files
+data/raw
+data/processed
+
+#trained models(csn be very large)
+models/*.pkl
+models/*.joblib
+
+#Python
+__pycache__/
+*.pyc.
+.env
+venv/
+.venv/
+
+#Jupyter
+.ipynb.checkpoints/
+
+#OS
+.DS_Store
+Thumbs.db
