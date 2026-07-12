@@ -13,6 +13,36 @@ MODEL_PATH = Path(__file__).resolve().parent.parent.parent / "models" / "xgb_mod
 model = joblib.load(MODEL_PATH)
 explainer = shap.TreeExplainer(model)
 
+# Human-readable labels for each feature
+FEATURE_LABELS = {
+    "highest_education": "Prior education level",
+    "imd_band": "Neighbourhood deprivation level",
+    "age_band": "Age group",
+    "num_of_prev_attempts": "Number of previous attempts",
+    "studied_credits": "Course workload (credits)",
+    "mean_score": "Average assessment score",
+    "max_score": "Highest assessment score",
+    "min_score": "Lowest assessment score",
+    "number_of_takes": "Number of assessments submitted",
+    "mean_weight": "Average assessment weight",
+    "total_clicks": "Total platform engagement",
+    "num_active_days": "Number of active days",
+    "avg_daily_clicks": "Average daily engagement",
+    "region_East Anglian Region": "Region: East Anglian",
+    "region_East Midlands Region": "Region: East Midlands",
+    "region_Ireland": "Region: Ireland",
+    "region_London Region": "Region: London",
+    "region_North Region": "Region: North",
+    "region_North Western Region": "Region: North Western",
+    "region_Scotland": "Region: Scotland",
+    "region_South East Region": "Region: South East",
+    "region_South Region": "Region: South",
+    "region_South West Region": "Region: South West",
+    "region_Wales": "Region: Wales",
+    "region_West Midlands Region": "Region: West Midlands",
+    "region_Yorkshire Region": "Region: Yorkshire"
+}
+
 
 class StudentData(BaseModel):
     highest_education: int
@@ -76,7 +106,7 @@ def predict(data: StudentData):
     for feature, impact in feature_impacts[:3]:
         direction = "increases risk" if impact > 0 else "decreases risk"
         top_reasons.append({
-            "feature": feature,
+            "feature": FEATURE_LABELS.get(feature, feature),
             "impact": direction
         })
 
