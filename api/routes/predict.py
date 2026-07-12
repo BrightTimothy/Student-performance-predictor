@@ -4,12 +4,14 @@ from fastapi import APIRouter
 from pydantic import BaseModel, Field
 import joblib
 import pandas as pd
+import shap
 
 router = APIRouter()
 
 # Load the trained model once when the API starts
 MODEL_PATH = Path(__file__).resolve().parent.parent.parent / "models" / "xgb_model.pkl"
 model = joblib.load(MODEL_PATH)
+explainer = shap.TreeExplainer(model)
 
 
 class StudentData(BaseModel):
@@ -60,8 +62,27 @@ def predict(data: StudentData):
     else:
         tier = "Safe"
 
+    # Calculate SHAP values for this student
+    shap_values = explainer.shap_values(input_df)
+
+    # Pair feature names with their SHAP values
+    feature_impacts = list(zip(input_df.columns, shap_values[0]))
+
+    # Sort by absolute impact (biggest influence first)
+    feature_impacts.sort(key=lambda x: abs(x[1]), reverse=True)
+
+    # Take top 3 and format them
+    top_reasons = []
+    for feature, impact in feature_impacts[:3]:
+        direction = "increases risk" if impact > 0 else "decreases risk"
+        top_reasons.append({
+            "feature": feature,
+            "impact": direction
+        })
+
     return {
         "at_risk": int(prediction),
         "risk_score": round(float(probability) * 100, 1),
-        "risk_tier": tier
+        "risk_tier": tier,
+        "top_reasons": top_reasons
     }
