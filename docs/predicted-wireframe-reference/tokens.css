@@ -1,0 +1,46 @@
+/* ==========================================================================
+   PredictEd — Design Tokens (static wireframe reference)
+   Source of truth for color, radius, and shadow values used across the
+   9-screen wireframe. Load this before components.css.
+   ========================================================================== */
+:root{
+  /* ---- Surface & background ---- */
+  --bg:#FAF8F3;
+  --card:#FFFFFF;
+  --border:#E8E3D9;
+  --border-soft:#F0ECE3;
+
+  /* ---- Text ---- */
+  --text:#33302B;
+  --text-soft:#79746C;
+  --text-faint:#AFA99D;
+
+  /* ---- Accent — the ONE calm blue ---- */
+  --accent:#4F6FCB;
+  --accent-soft:#EEF1FB;
+  --accent-dark:#3E58A8;
+
+  /* ---- Risk colors ----
+     RULE: muted only. Small dots, status-chip backgrounds, or thin bar
+     fills — NEVER a full row/card background wash. */
+  --risk-high:#C97B72;
+  --risk-high-bg:#FBEEEC;
+  --risk-med:#C99A4A;
+  --risk-med-bg:#FBF3E1;
+  --risk-low:#6E9E79;
+  --risk-low-bg:#EAF3EC;
+
+  /* ---- Neutral ----
+     RULE: reserved for the bursary-clearance chip only. Must always read
+     quieter than the risk colors above. */
+  --neutral-bg:#F1EDE4;
+  --neutral-text:#8A8478;
+
+  /* ---- Radius ---- */
+  --radius-lg:16px;
+  --radius-md:10px;
+  --radius-sm:7px;
+
+  /* ---- Shadow — deliberately soft, no hard drop shadows anywhere ---- */
+  --shadow:0 1px 2px rgba(40,35,25,.05), 0 4px 16px rgba(40,35,25,.04);
+}

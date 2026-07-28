@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PredictEd — Wireframes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components.css">
+</head>
+<body>
+
+<header class="page-header">
+  <div class="page-eyebrow">PredictEd · Design System &amp; Wireframes</div>
+  <h1>No student unseen.</h1>
+  <p>A calm, explainable early-warning tool for academic advisors — built to feel like a morning to-do list of people to care for, never a control room of alarms. Below: all 9 screens, mobile-first, scaling up to desktop.</p>
+  <div class="token-legend">
+    <span class="swatch"><i style="background:#FAF8F3;border:1px solid #E8E3D9"></i>Warm off-white bg</span>
+    <span class="swatch"><i style="background:#4F6FCB"></i>Calm blue accent</span>
+    <span class="swatch"><i style="background:#C97B72"></i>Muted risk · high</span>
+    <span class="swatch"><i style="background:#C99A4A"></i>Muted risk · medium</span>
+    <span class="swatch"><i style="background:#6E9E79"></i>Muted risk · low</span>
+    <span class="swatch"><i style="background:#8A8478"></i>Neutral (bursary context)</span>
+  </div>
+</header>
+
+<nav class="toc"><div class="toc-inner">
+  <div class="toc-group"><span class="toc-group-label">Advisor</span>
+    <a href="#login">1 Login</a><a href="#dashboard">2 Dashboard</a><a href="#profile">3 Profile</a>
+    <a href="#log-intervention">4 Log intervention</a><a href="#digest">5 Weekly digest</a><a href="#settings">6 Settings</a>
+  </div>
+  <div class="toc-sep"></div>
+  <div class="toc-group"><span class="toc-group-label">Coordinator</span>
+    <a href="#dept-overview">7 Department overview</a><a href="#outreach-coverage">8 Outreach coverage</a><a href="#escalations">9 Escalations</a>
+  </div>
+</div></nav>
+
+<main>
+
+<!-- =========================================================
+     1. LOGIN
+========================================================= -->
+<section id="login" class="screen-section">
+  <div class="screen-head"><span class="screen-num">01</span><h2 class="screen-title">Login</h2><span class="role-badge advisor">Shared</span></div>
+  <p class="rationale">First impression sets the tone: quiet, uncluttered, no dashboard noise leaking through. The motto does the emotional work instead of a hero image. The demo hint is subdued — informative, not a marketing banner.</p>
+
+  <div class="mockups-row">
+    <div class="mockup-col">
+      <div class="mockup-label">Desktop · 900px canvas</div>
+      <div class="app-desktop" style="border-radius:14px;">
+        <div class="login-wrap" style="width:100%;">
+          <div class="login-card">
+            <div class="login-logo"><div class="login-mark">P</div><div style="font-weight:800;font-size:16px;">PredictEd</div></div>
+            <div class="login-motto">"We know before the grades do."</div>
+            <label class="form-label">Email</label>
+            <div class="field-mock">advisor@university.edu</div>
+            <label class="form-label">Password</label>
+            <div class="field-mock">••••••••••</div>
+            <button class="btn-primary btn-block" style="margin-top:6px;">Log in</button>
+            <div class="demo-hint">Demo account — advisor@predicted.demo · password: demo1234</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mockup-col">
+      <div class="mockup-label">Mobile · 375px</div>
+      <div class="app-mobile"><div class="app-mobile-inner">
+        <div class="login-wrap" style="height:100%;">
+          <div class="login-card" style="width:260px;box-shadow:none;border:none;">
+            <div class="login-logo"><div class="login-mark">P</div><div style="font-weight:800;font-size:16px;">PredictEd</div></div>
+            <div class="login-motto">"We know before the grades do."</div>
+            <label class="form-label">Email</label>
+            <div class="field-mock">advisor@university.edu</div>
+            <label class="form-label">Password</label>
+            <div class="field-mock">••••••••••</div>
+            <button class="btn-primary btn-block" style="margin-top:6px;">Log in</button>
+            <div class="demo-hint">Demo — advisor@predicted.demo / demo1234</div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     2. ADVISOR DASHBOARD
+========================================================= -->
+<section id="dashboard" class="screen-section">
+  <div class="screen-head"><span class="screen-num">02</span><h2 class="screen-title">Advisor dashboard</h2><span class="role-badge advisor">Advisor</span></div>
+  <p class="rationale"><b>Desktop:</b> sidebar + 3 summary cards + compact filter row + ranked list as bordered card-rows (never a spreadsheet grid — no colour-washed backgrounds, only a small muted dot carries risk). <b>Mobile:</b> sidebar collapses to a hamburger, summary cards become a horizontal scroll strip, filters collapse into a single "Filters" pill that would open a bottom sheet, and every row becomes a full-width stacked card so nothing is truncated. No financial data appears on this screen at all.</p>
+
+  <div class="mockups-row">
+    <div class="mockup-col">
+      <div class="mockup-label">Desktop</div>
+      <div class="app-desktop">
+        <div class="app-sidebar">
+          <div class="logo"><div class="logo-mark">P</div>PredictEd</div>
+          <div class="nav-item active"><span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Dashboard</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.3"/><path d="M15.5 14.2c2.6.4 4.5 2.4 4.5 5.3"/></svg></span>Students</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>Weekly digest</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1.2l2-1.5-2-3.4-2.3.9a7 7 0 00-2-1.2L14 3h-4l-.6 2.6a7 7 0 00-2 1.2l-2.3-.9-2 3.4 2 1.5A7 7 0 005 12a7 7 0 00.1 1.2l-2 1.5 2 3.4 2.3-.9c.6.5 1.3.9 2 1.2L10 21h4l.6-2.6c.7-.3 1.4-.7 2-1.2l2.3.9 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg></span>Settings</div>
+          <div class="sidebar-foot"><div class="mini-avatar">PM</div><div><div class="name">Priya Menon</div><div class="role">Advisor</div></div></div>
+        </div>
+        <div class="app-main">
+          <div class="app-topbar">
+            <div class="search-pill"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>Search students…</div>
+            <div class="top-icon"><span class="icon"><svg viewBox="0 0 24 24"><path d="M6 10a6 6 0 0112 0c0 4 1.5 5.5 1.5 5.5H4.5S6 14 6 10z"/><path d="M10 19a2 2 0 004 0"/></svg></span></div>
+            <div class="mini-avatar">PM</div>
+          </div>
+          <div class="app-body">
+            <div class="cohort-head"><h2>Computer Science · 200 Level</h2><p>38 students · your cohort</p></div>
+            <div class="summary-row">
+              <div class="summary-card"><div class="stat-value" style="color:var(--risk-high)">9</div><div class="stat-label">Flagged</div></div>
+              <div class="summary-card"><div class="stat-value" style="color:var(--risk-med)">4</div><div class="stat-label">Awaiting outreach</div></div>
+              <div class="summary-card"><div class="stat-value" style="color:var(--risk-low)">12</div><div class="stat-label">Resolved this term</div></div>
+            </div>
+            <div class="filter-bar">
+              <span class="filter-pill active">All risk</span><span class="filter-pill">High</span><span class="filter-pill">Medium</span><span class="filter-pill">Low</span><span class="filter-pill">Awaiting outreach</span>
+            </div>
+            <div class="section-label-row"><h3>Ranked by risk</h3></div>
+
+            <div class="student-row">
+              <div class="avatar-circle">TB</div>
+              <div class="student-id-col"><div class="student-name">Tunde Balogun</div><div class="student-meta">CSC201 · 200L</div></div>
+              <div class="risk-col"><span class="risk-dot high"></span><span class="risk-label high">High risk</span></div>
+              <div class="reason-col">Missed 2 of 3 quizzes this month</div>
+              <span class="status-chip flagged">Flagged</span>
+              <span class="awaiting-note">awaiting outreach · 6 days</span>
+              <button class="btn-secondary btn-sm row-action">View</button>
+            </div>
+            <div class="student-row">
+              <div class="avatar-circle">IS</div>
+              <div class="student-id-col"><div class="student-name">Ibrahim Sule</div><div class="student-meta">CSC210 · 200L</div></div>
+              <div class="risk-col"><span class="risk-dot high"></span><span class="risk-label high">High risk</span></div>
+              <div class="reason-col">No LMS login in 9 days</div>
+              <span class="status-chip flagged">Flagged</span>
+              <span class="awaiting-note" style="color:var(--risk-high)">awaiting outreach · 8 days</span>
+              <button class="btn-secondary btn-sm row-action">View</button>
+            </div>
+            <div class="student-row">
+              <div class="avatar-circle">NA</div>
+              <div class="student-id-col"><div class="student-name">Ngozi Adeyemi</div><div class="student-meta">CSC201 · 200L</div></div>
+              <div class="risk-col"><span class="risk-dot med"></span><span class="risk-label med">Medium risk</span></div>
+              <div class="reason-col">Engagement dropped 40% in 2 weeks</div>
+              <span class="status-chip contacted">Contacted</span>
+              <span class="awaiting-note">reply pending · 2 days</span>
+              <button class="btn-secondary btn-sm row-action">View</button>
+            </div>
+            <div class="student-row">
+              <div class="avatar-circle">FO</div>
+              <div class="student-id-col"><div class="student-name">Femi Okoro</div><div class="student-meta">CSC205 · 200L</div></div>
+              <div class="risk-col"><span class="risk-dot med"></span><span class="risk-label med">Medium risk</span></div>
+              <div class="reason-col">Late submission on 2 assignments</div>
+              <span class="status-chip flagged">Flagged</span>
+              <span class="awaiting-note">awaiting outreach · 1 day</span>
+              <button class="btn-secondary btn-sm row-action">View</button>
+            </div>
+            <div class="student-row">
+              <div class="avatar-circle">CE</div>
+              <div class="student-id-col"><div class="student-name">Chidinma Eze</div><div class="student-meta">CSC201 · 200L</div></div>
+              <div class="risk-col"><span class="risk-dot low"></span><span class="risk-label low">Low risk</span></div>
+              <div class="reason-col">Slight dip in forum activity, since resolved</div>
+              <span class="status-chip resolved">Resolved</span>
+              <span class="awaiting-note">closed 3 days ago</span>
+              <button class="btn-secondary btn-sm row-action">View</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mockup-col">
+      <div class="mockup-label">Mobile</div>
+      <div class="app-mobile"><div class="app-mobile-inner">
+        <div class="m-topbar">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>
+          <div class="logo" style="padding:0;"><div class="logo-mark" style="width:20px;height:20px;font-size:10px;">P</div>PredictEd</div>
+          <div class="mini-avatar" style="width:22px;height:22px;font-size:9px;">PM</div>
+        </div>
+        <div class="m-content">
+          <div class="cohort-head"><h2 style="font-size:16px;">CS · 200 Level</h2><p>38 students</p></div>
+          <div class="m-summary-row">
+            <div class="m-summary-card"><div class="stat-value" style="color:var(--risk-high);font-size:18px;">9</div><div class="stat-label">Flagged</div></div>
+            <div class="m-summary-card"><div class="stat-value" style="color:var(--risk-med);font-size:18px;">4</div><div class="stat-label">Awaiting</div></div>
+            <div class="m-summary-card"><div class="stat-value" style="color:var(--risk-low);font-size:18px;">12</div><div class="stat-label">Resolved</div></div>
+          </div>
+          <button class="btn-secondary btn-sm" style="margin-bottom:12px;">Filters · All risk ▾</button>
+
+          <div class="m-student-card">
+            <div class="m-row1"><div class="avatar-circle">TB</div><div><div class="student-name">Tunde Balogun</div><div class="student-meta">CSC201 · 200L</div></div></div>
+            <div class="m-row2"><span class="risk-dot high"></span><span class="risk-label high">High risk</span></div>
+            <div class="m-row3">Missed 2 of 3 quizzes this month</div>
+            <div class="m-row4"><span class="status-chip flagged">Flagged</span><span class="awaiting-note">6 days waiting</span></div>
+            <button class="btn-primary btn-sm btn-block">View student</button>
+          </div>
+          <div class="m-student-card">
+            <div class="m-row1"><div class="avatar-circle">IS</div><div><div class="student-name">Ibrahim Sule</div><div class="student-meta">CSC210 · 200L</div></div></div>
+            <div class="m-row2"><span class="risk-dot high"></span><span class="risk-label high">High risk</span></div>
+            <div class="m-row3">No LMS login in 9 days</div>
+            <div class="m-row4"><span class="status-chip flagged">Flagged</span><span class="awaiting-note" style="color:var(--risk-high)">8 days waiting</span></div>
+            <button class="btn-primary btn-sm btn-block">View student</button>
+          </div>
+          <div class="m-student-card">
+            <div class="m-row1"><div class="avatar-circle">NA</div><div><div class="student-name">Ngozi Adeyemi</div><div class="student-meta">CSC201 · 200L</div></div></div>
+            <div class="m-row2"><span class="risk-dot med"></span><span class="risk-label med">Medium risk</span></div>
+            <div class="m-row3">Engagement dropped 40% in 2 weeks</div>
+            <div class="m-row4"><span class="status-chip contacted">Contacted</span><span class="awaiting-note">reply · 2 days</span></div>
+            <button class="btn-secondary btn-sm btn-block">View student</button>
+          </div>
+        </div>
+        <div class="m-bottomnav">
+          <div class="bn-item active"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Dashboard</div>
+          <div class="bn-item"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>Digest</div>
+          <div class="bn-item"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1.2l2-1.5-2-3.4-2.3.9a7 7 0 00-2-1.2L14 3h-4l-.6 2.6a7 7 0 00-2 1.2l-2.3-.9-2 3.4 2 1.5A7 7 0 005 12a7 7 0 00.1 1.2l-2 1.5 2 3.4 2.3-.9c.6.5 1.3.9 2 1.2L10 21h4l.6-2.6c.7-.3 1.4-.7 2-1.2l2.3.9 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg></span>Settings</div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     3. STUDENT PROFILE
+========================================================= -->
+<section id="profile" class="screen-section">
+  <div class="screen-head"><span class="screen-num">03</span><h2 class="screen-title">Student profile</h2><span class="role-badge advisor">Advisor</span></div>
+  <p class="rationale"><b>Desktop:</b> two-column — left column carries identity, bursary context and actions; right column carries the explainability content (gauge, reason bars, trend, log). <b>Mobile:</b> single column, everything stacks in the same reading order, and the three actions become a sticky bar pinned to the bottom of the screen so they're always one thumb-reach away. The bursary chip is deliberately grey and quiet — same visual weight as a metadata label, never a status alert.</p>
+
+  <div class="mockups-row">
+    <div class="mockup-col">
+      <div class="mockup-label">Desktop</div>
+      <div class="app-desktop">
+        <div class="app-main" style="width:100%;">
+          <div class="app-topbar"><span class="icon"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></span><div style="font-size:12.5px;font-weight:700;">Back to dashboard</div></div>
+          <div class="app-body" style="display:flex;gap:24px;">
+            <div style="width:230px;flex-shrink:0;">
+              <div class="profile-header"><div class="profile-avatar">TB</div><div><div class="profile-name">Tunde Balogun</div><div class="profile-meta">CSC/200/0142 · Computer Science, 200L</div></div></div>
+              <span class="chip-neutral">Bursary: Not cleared</span>
+              <div style="margin-top:20px;">
+                <div class="form-label">Actions</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <button class="btn-secondary btn-block">Log intervention</button>
+                  <button class="btn-secondary btn-block">Send email</button>
+                  <button class="btn-primary btn-block">Mark resolved</button>
+                </div>
+              </div>
+            </div>
+            <div style="flex:1;">
+              <div class="gauge-card">
+                <svg class="gauge" viewBox="0 0 100 60">
+                  <path d="M6 54 A44 44 0 0 1 33 12" stroke="#EAF3EC" stroke-width="10" fill="none" stroke-linecap="round"/>
+                  <path d="M33 12 A44 44 0 0 1 67 12" stroke="#FBF3E1" stroke-width="10" fill="none" stroke-linecap="round"/>
+                  <path d="M67 12 A44 44 0 0 1 94 54" stroke="#FBEEEC" stroke-width="10" fill="none" stroke-linecap="round"/>
+                  <line x1="50" y1="50" x2="78" y2="26" stroke="#33302B" stroke-width="2.5" stroke-linecap="round"/>
+                  <circle cx="50" cy="50" r="3.5" fill="#33302B"/>
+                </svg>
+                <div><div class="gauge-tier">High risk</div><div class="gauge-sub">Tier 3 of 3 · reviewed today</div></div>
+              </div>
+              <div class="reason-card">
+                <h4>Why flagged — academic signals only</h4>
+                <div class="reason-item"><div class="reason-item-top"><span>Assessment scores</span><span>Missed 2 of 3 quizzes</span></div><div class="reason-track"><div class="reason-fill" style="width:80%;background:var(--risk-high)"></div></div></div>
+                <div class="reason-item"><div class="reason-item-top"><span>LMS engagement</span><span>Down 45% over 3 weeks</span></div><div class="reason-track"><div class="reason-fill" style="width:65%;background:var(--risk-med)"></div></div></div>
+                <div class="reason-item"><div class="reason-item-top"><span>Deadlines</span><span>2 late submissions</span></div><div class="reason-track"><div class="reason-fill" style="width:50%;background:var(--risk-med)"></div></div></div>
+              </div>
+              <div class="trend-card">
+                <h4>LMS engagement — last 6 weeks</h4>
+                <svg class="sparkline" viewBox="0 0 300 56" preserveAspectRatio="none">
+                  <polyline points="0,10 50,16 100,20 150,30 200,38 250,44 300,48" fill="none" stroke="#4F6FCB" stroke-width="2.5"/>
+                  <circle cx="300" cy="48" r="3.5" fill="#4F6FCB"/>
+                </svg>
+              </div>
+              <div class="reason-card">
+                <h4>Intervention log</h4>
+                <div class="log-item"><span class="log-dot"></span><div><div class="log-date">Oct 3</div></div><div><div class="log-text">Email sent by Priya Menon</div><div class="log-sub">No response yet</div></div></div>
+                <div class="log-item"><span class="log-dot" style="background:var(--text-faint)"></span><div><div class="log-date">Sep 21</div></div><div><div class="log-text">Flagged — high risk</div><div class="log-sub">Generated automatically</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mockup-col">
+      <div class="mockup-label">Mobile</div>
+      <div class="app-mobile"><div class="app-mobile-inner">
+        <div class="m-topbar"><span class="icon"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></span><div style="font-size:12px;font-weight:700;">Student profile</div><span style="width:16px"></span></div>
+        <div class="m-content">
+          <div class="profile-header"><div class="profile-avatar">TB</div><div><div class="profile-name" style="font-size:14px;">Tunde Balogun</div><div class="profile-meta">CSC/200/0142</div></div></div>
+          <span class="chip-neutral">Bursary: Not cleared</span>
+          <div class="gauge-card" style="margin-top:14px;">
+            <svg class="gauge" viewBox="0 0 100 60">
+              <path d="M6 54 A44 44 0 0 1 33 12" stroke="#EAF3EC" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <path d="M33 12 A44 44 0 0 1 67 12" stroke="#FBF3E1" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <path d="M67 12 A44 44 0 0 1 94 54" stroke="#FBEEEC" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <line x1="50" y1="50" x2="78" y2="26" stroke="#33302B" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="50" cy="50" r="3.5" fill="#33302B"/>
+            </svg>
+            <div><div class="gauge-tier">High risk</div><div class="gauge-sub">Tier 3 of 3</div></div>
+          </div>
+          <div class="reason-card">
+            <h4>Why flagged</h4>
+            <div class="reason-item"><div class="reason-item-top"><span>Assessments</span><span>2 of 3 missed</span></div><div class="reason-track"><div class="reason-fill" style="width:80%;background:var(--risk-high)"></div></div></div>
+            <div class="reason-item"><div class="reason-item-top"><span>Engagement</span><span>Down 45%</span></div><div class="reason-track"><div class="reason-fill" style="width:65%;background:var(--risk-med)"></div></div></div>
+            <div class="reason-item"><div class="reason-item-top"><span>Deadlines</span><span>2 late</span></div><div class="reason-track"><div class="reason-fill" style="width:50%;background:var(--risk-med)"></div></div></div>
+          </div>
+          <div class="trend-card">
+            <h4>Engagement trend</h4>
+            <svg class="sparkline" viewBox="0 0 260 56" preserveAspectRatio="none">
+              <polyline points="0,10 43,16 87,20 130,30 173,38 217,44 260,48" fill="none" stroke="#4F6FCB" stroke-width="2.5"/>
+            </svg>
+          </div>
+          <div class="reason-card">
+            <h4>Intervention log</h4>
+            <div class="log-item"><span class="log-dot"></span><div><div class="log-date">Oct 3</div></div><div><div class="log-text">Email sent</div><div class="log-sub">No response yet</div></div></div>
+          </div>
+        </div>
+        <div class="m-action-bar" style="padding:10px 16px;">
+          <button class="btn-secondary btn-sm" style="flex:1;">Log</button>
+          <button class="btn-secondary btn-sm" style="flex:1;">Email</button>
+          <button class="btn-primary btn-sm" style="flex:1;">Resolve</button>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     4. LOG INTERVENTION
+========================================================= -->
+<section id="log-intervention" class="screen-section">
+  <div class="screen-head"><span class="screen-num">04</span><h2 class="screen-title">Log intervention</h2><span class="role-badge advisor">Advisor</span></div>
+  <p class="rationale"><b>Desktop:</b> a lightweight side panel over the profile, keeping context visible. <b>Mobile:</b> a full-screen sheet so the small viewport isn't split between a modal and a background page. Both keep the form to two fields — outreach type and a note — because friction here is the single biggest risk to the Flag→Contacted loop actually being honest.</p>
+
+  <div class="mockups-row">
+    <div class="mockup-col">
+      <div class="mockup-label">Desktop</div>
+      <div class="app-desktop">
+        <div class="app-main" style="width:100%;display:flex;justify-content:flex-end;background:rgba(51,48,43,.35);">
+          <div style="width:340px;background:var(--card);height:100%;padding:22px;border-left:1px solid var(--border);">
+            <div style="font-size:15px;font-weight:800;margin-bottom:2px;">Log intervention</div>
+            <div style="font-size:11.5px;color:var(--text-soft);margin-bottom:18px;">Tunde Balogun · CSC201 · 200L</div>
+            <label class="form-label">Outreach type</label>
+            <div class="segmented">
+              <span class="seg-opt active">Email</span><span class="seg-opt">Call</span><span class="seg-opt">In person</span><span class="seg-opt">Message</span>
+            </div>
+            <label class="form-label">Notes</label>
+            <div class="textarea-mock">Called to check in about missed quizzes — agreed to meet Thursday.</div>
+            <button class="btn-primary btn-block">Save &amp; mark contacted</button>
+            <button class="btn-ghost btn-block" style="margin-top:8px;">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mockup-col">
+      <div class="mockup-label">Mobile — full-screen sheet</div>
+      <div class="app-mobile"><div class="app-mobile-inner">
+        <div class="m-topbar"><span style="font-size:12px;color:var(--text-soft);">Cancel</span><div style="font-size:12px;font-weight:700;">Log intervention</div><span style="width:30px"></span></div>
+        <div class="m-content">
+          <div style="font-size:11.5px;color:var(--text-soft);margin-bottom:16px;">Tunde Balogun · CSC201</div>
+          <label class="form-label">Outreach type</label>
+          <div class="segmented">
+            <span class="seg-opt active">Email</span><span class="seg-opt">Call</span><span class="seg-opt">In person</span>
+          </div>
+          <label class="form-label">Notes</label>
+          <div class="textarea-mock" style="height:110px;">Called to check in about missed quizzes — agreed to meet Thursday.</div>
+        </div>
+        <div class="m-action-bar" style="padding:10px 16px;">
+          <button class="btn-primary btn-block">Save &amp; mark contacted</button>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     5. WEEKLY DIGEST
+========================================================= -->
+<section id="digest" class="screen-section">
+  <div class="screen-head"><span class="screen-num">05</span><h2 class="screen-title">Weekly digest</h2><span class="role-badge advisor">Advisor</span></div>
+  <p class="rationale"><b>Desktop:</b> three comparison stats in a row above a highlighted-students list. <b>Mobile:</b> stats become a 2-up grid (third wraps below) so numbers stay legible without shrinking type. This screen exists so an advisor can feel on top of their cohort in 15 seconds without opening the full dashboard.</p>
+
+  <div class="mockups-row">
+    <div class="mockup-col">
+      <div class="mockup-label">Desktop</div>
+      <div class="app-desktop">
+        <div class="app-sidebar">
+          <div class="logo"><div class="logo-mark">P</div>PredictEd</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Dashboard</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.3"/><path d="M15.5 14.2c2.6.4 4.5 2.4 4.5 5.3"/></svg></span>Students</div>
+          <div class="nav-item active"><span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>Weekly digest</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1.2l2-1.5-2-3.4-2.3.9a7 7 0 00-2-1.2L14 3h-4l-.6 2.6a7 7 0 00-2 1.2l-2.3-.9-2 3.4 2 1.5A7 7 0 005 12a7 7 0 00.1 1.2l-2 1.5 2 3.4 2.3-.9c.6.5 1.3.9 2 1.2L10 21h4l.6-2.6c.7-.3 1.4-.7 2-1.2l2.3.9 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg></span>Settings</div>
+        </div>
+        <div class="app-main">
+          <div class="app-body">
+            <div class="cohort-head"><h2>Weekly digest</h2><p>Week of Oct 20 — Computer Science · 200 Level</p></div>
+            <div class="digest-stat-row">
+              <div class="digest-stat"><div class="stat-value">6</div><div class="stat-label">New flags</div><div class="digest-delta warn">↑ 2 vs last week</div></div>
+              <div class="digest-stat"><div class="stat-value">9</div><div class="stat-label">Contacted</div><div class="digest-delta up">↑ 3 vs last week</div></div>
+              <div class="digest-stat"><div class="stat-value">3</div><div class="stat-label">Improved</div><div class="digest-delta up">↑ 1 vs last week</div></div>
+            </div>
+            <div class="section-label-row"><h3>Worth a look</h3></div>
+            <div class="student-row"><div class="avatar-circle">IS</div><div class="student-id-col"><div class="student-name">Ibrahim Sule</div><div class="student-meta">New high-risk flag</div></div><span class="status-chip flagged" style="margin-left:auto;">Flagged</span></div>
+            <div class="student-row"><div class="avatar-circle">CE</div><div class="student-id-col"><div class="student-name">Chidinma Eze</div><div class="student-meta">Engagement trending back up</div></div><span class="status-chip resolved" style="margin-left:auto;">Improved</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mockup-col">
+      <div class="mockup-label">Mobile</div>
+      <div class="app-mobile"><div class="app-mobile-inner">
+        <div class="m-topbar"><span class="icon"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><div style="font-size:12px;font-weight:700;">Weekly digest</div><div class="mini-avatar" style="width:22px;height:22px;font-size:9px;">PM</div></div>
+        <div class="m-content">
+          <div class="cohort-head"><h2 style="font-size:15px;">Week of Oct 20</h2><p>CS · 200 Level</p></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">
+            <div class="digest-stat"><div class="stat-value">6</div><div class="stat-label">New flags</div><div class="digest-delta warn">↑ 2</div></div>
+            <div class="digest-stat"><div class="stat-value">9</div><div class="stat-label">Contacted</div><div class="digest-delta up">↑ 3</div></div>
+            <div class="digest-stat"><div class="stat-value">3</div><div class="stat-label">Improved</div><div class="digest-delta up">↑ 1</div></div>
+          </div>
+          <div class="section-label-row" style="margin-top:0;"><h3>Worth a look</h3></div>
+          <div class="m-student-card"><div class="m-row1"><div class="avatar-circle">IS</div><div><div class="student-name">Ibrahim Sule</div><div class="student-meta">New high-risk flag</div></div></div></div>
+          <div class="m-student-card"><div class="m-row1"><div class="avatar-circle">CE</div><div><div class="student-name">Chidinma Eze</div><div class="student-meta">Trending back up</div></div></div></div>
+        </div>
+        <div class="m-bottomnav">
+          <div class="bn-item"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Dashboard</div>
+          <div class="bn-item active"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>Digest</div>
+          <div class="bn-item"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1.2l2-1.5-2-3.4-2.3.9a7 7 0 00-2-1.2L14 3h-4l-.6 2.6a7 7 0 00-2 1.2l-2.3-.9-2 3.4 2 1.5A7 7 0 005 12a7 7 0 00.1 1.2l-2 1.5 2 3.4 2.3-.9c.6.5 1.3.9 2 1.2L10 21h4l.6-2.6c.7-.3 1.4-.7 2-1.2l2.3.9 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg></span>Settings</div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     6. SETTINGS
+========================================================= -->
+<section id="settings" class="screen-section">
+  <div class="screen-head"><span class="screen-num">06</span><h2 class="screen-title">Settings</h2><span class="role-badge advisor">Advisor</span></div>
+  <p class="rationale"><b>Desktop:</b> tab list beside a content panel, standard settings pattern. <b>Mobile:</b> tabs become a stacked list of rows that push to a sub-page on tap — no side-by-side panel, since 320px can't hold both comfortably. The plain-language tier explanation lives here rather than on the profile, so the profile screen stays focused on this one student.</p>
+
+  <div class="mockups-row">
+    <div class="mockup-col">
+      <div class="mockup-label">Desktop</div>
+      <div class="app-desktop">
+        <div class="app-sidebar">
+          <div class="logo"><div class="logo-mark">P</div>PredictEd</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Dashboard</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.3"/><path d="M15.5 14.2c2.6.4 4.5 2.4 4.5 5.3"/></svg></span>Students</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>Weekly digest</div>
+          <div class="nav-item active"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1.2l2-1.5-2-3.4-2.3.9a7 7 0 00-2-1.2L14 3h-4l-.6 2.6a7 7 0 00-2 1.2l-2.3-.9-2 3.4 2 1.5A7 7 0 005 12a7 7 0 00.1 1.2l-2 1.5 2 3.4 2.3-.9c.6.5 1.3.9 2 1.2L10 21h4l.6-2.6c.7-.3 1.4-.7 2-1.2l2.3.9 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg></span>Settings</div>
+        </div>
+        <div class="app-main">
+          <div class="app-body" style="display:flex;">
+            <div style="width:150px;flex-shrink:0;">
+              <div class="cohort-head"><h2 style="font-size:17px;">Settings</h2></div>
+              <div class="settings-tabs">
+                <div class="settings-tab active">Profile</div>
+                <div class="settings-tab">Notifications</div>
+                <div class="settings-tab">How risk tiers work</div>
+              </div>
+            </div>
+            <div class="settings-panel">
+              <h3 style="font-size:13px;color:var(--text-soft);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">How risk tiers work</h3>
+              <p style="font-size:12.5px;color:var(--text-soft);line-height:1.6;max-width:420px;">Plain-language, no formulas — written for a busy advisor, not a data scientist.</p>
+              <div class="tier-note"><b style="color:var(--risk-high)">High</b> — the student is showing several warning signs at once and hasn't been reached yet this term.</div>
+              <div class="tier-note" style="margin-top:8px;"><b style="color:var(--risk-med)">Medium</b> — one or two signals worth a check-in, nothing urgent yet.</div>
+              <div class="tier-note" style="margin-top:8px;"><b style="color:var(--risk-low)">Low</b> — engagement and grades look steady.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mockup-col">
+      <div class="mockup-label">Mobile</div>
+      <div class="app-mobile"><div class="app-mobile-inner">
+        <div class="m-topbar"><span class="icon"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><div style="font-size:12px;font-weight:700;">Settings</div><span style="width:16px"></span></div>
+        <div class="m-content">
+          <div class="settings-tabs">
+            <div class="settings-tab">Profile ›</div>
+            <div class="settings-tab">Notifications ›</div>
+            <div class="settings-tab active">How risk tiers work</div>
+          </div>
+          <div class="tier-note" style="margin-top:10px;"><b style="color:var(--risk-high)">High</b> — several signals at once, not reached yet.</div>
+          <div class="tier-note" style="margin-top:8px;"><b style="color:var(--risk-med)">Medium</b> — one or two signals worth a check-in.</div>
+          <div class="tier-note" style="margin-top:8px;"><b style="color:var(--risk-low)">Low</b> — engagement and grades look steady.</div>
+        </div>
+        <div class="m-bottomnav">
+          <div class="bn-item"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Dashboard</div>
+          <div class="bn-item"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>Digest</div>
+          <div class="bn-item active"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1.2l2-1.5-2-3.4-2.3.9a7 7 0 00-2-1.2L14 3h-4l-.6 2.6a7 7 0 00-2 1.2l-2.3-.9-2 3.4 2 1.5A7 7 0 005 12a7 7 0 00.1 1.2l-2 1.5 2 3.4 2.3-.9c.6.5 1.3.9 2 1.2L10 21h4l.6-2.6c.7-.3 1.4-.7 2-1.2l2.3.9 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg></span>Settings</div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     7. DEPARTMENT OVERVIEW (HOD)
+========================================================= -->
+<section id="dept-overview" class="screen-section">
+  <div class="screen-head"><span class="screen-num">07</span><h2 class="screen-title">Department overview</h2><span class="role-badge hod">Coordinator · HOD</span></div>
+  <p class="rationale"><b>Desktop:</b> aggregate stats + trend chart + a per-level "Cohort Risk Overview" bar chart. <b>Mobile:</b> stats stack 2-up, the trend chart goes full width, and the level bars become a vertical list — still fully legible without a horizontal scroll. The caption under the bar chart is doing real work: it explicitly reframes 200L's higher flag rate as a harder transition stage, not a judgment on that level's advisor.</p>
+
+  <div class="mockups-row">
+    <div class="mockup-col">
+      <div class="mockup-label">Desktop</div>
+      <div class="app-desktop">
+        <div class="app-sidebar">
+          <div class="logo"><div class="logo-mark">P</div>PredictEd</div>
+          <div class="nav-item active"><span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Overview</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.3"/><path d="M15.5 14.2c2.6.4 4.5 2.4 4.5 5.3"/></svg></span>Outreach coverage</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><path d="M6 10a6 6 0 0112 0c0 4 1.5 5.5 1.5 5.5H4.5S6 14 6 10z"/><path d="M10 19a2 2 0 004 0"/></svg></span>Escalations</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1.2l2-1.5-2-3.4-2.3.9a7 7 0 00-2-1.2L14 3h-4l-.6 2.6a7 7 0 00-2 1.2l-2.3-.9-2 3.4 2 1.5A7 7 0 005 12a7 7 0 00.1 1.2l-2 1.5 2 3.4 2.3-.9c.6.5 1.3.9 2 1.2L10 21h4l.6-2.6c.7-.3 1.4-.7 2-1.2l2.3.9 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg></span>Settings</div>
+          <div class="sidebar-foot"><div class="mini-avatar">NO</div><div><div class="name">Dr. Nkem Obi</div><div class="role">HOD · Computer Science</div></div></div>
+        </div>
+        <div class="app-main">
+          <div class="app-body">
+            <div class="cohort-head"><h2>Computer Science Department</h2><p>4 levels · 4 advisors · 145 students</p></div>
+            <div class="summary-row">
+              <div class="summary-card"><div class="stat-value" style="color:var(--risk-high)">42</div><div class="stat-label">Total flagged</div></div>
+              <div class="summary-card"><div class="stat-value" style="color:var(--risk-med)">15</div><div class="stat-label">Awaiting outreach</div></div>
+              <div class="summary-card"><div class="stat-value">3.2d</div><div class="stat-label">Avg. response time</div></div>
+            </div>
+            <div class="trend-card">
+              <h4>Flags over time</h4>
+              <svg class="sparkline" viewBox="0 0 600 60" preserveAspectRatio="none">
+                <polyline points="0,40 100,32 200,38 300,20 400,28 500,14 600,22" fill="none" stroke="#4F6FCB" stroke-width="2.5"/>
+              </svg>
+            </div>
+            <div class="bars-card">
+              <h4>Cohort risk overview</h4>
+              <p class="bars-caption">Flagged % by level — 200L tends to be the harder transition stage of the programme, not a reflection of advisor performance.</p>
+              <div class="level-bar-row"><span class="level-tag">100L</span><div class="level-track"><div class="level-fill" style="width:18%;background:var(--risk-low)"></div></div><span class="level-pct">18%</span></div>
+              <div class="level-bar-row"><span class="level-tag">200L</span><div class="level-track"><div class="level-fill" style="width:34%;background:var(--risk-med)"></div></div><span class="level-pct">34%</span></div>
+              <div class="level-bar-row"><span class="level-tag">300L</span><div class="level-track"><div class="level-fill" style="width:22%;background:var(--risk-med)"></div></div><span class="level-pct">22%</span></div>
+              <div class="level-bar-row"><span class="level-tag">400L</span><div class="level-track"><div class="level-fill" style="width:12%;background:var(--risk-low)"></div></div><span class="level-pct">12%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mockup-col">
+      <div class="mockup-label">Mobile</div>
+      <div class="app-mobile"><div class="app-mobile-inner">
+        <div class="m-topbar"><span class="icon"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><div style="font-size:12px;font-weight:700;">Overview</div><div class="mini-avatar" style="width:22px;height:22px;font-size:9px;">NO</div></div>
+        <div class="m-content">
+          <div class="cohort-head"><h2 style="font-size:15px;">CS Department</h2><p>4 levels · 145 students</p></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+            <div class="digest-stat"><div class="stat-value" style="color:var(--risk-high)">42</div><div class="stat-label">Flagged</div></div>
+            <div class="digest-stat"><div class="stat-value" style="color:var(--risk-med)">15</div><div class="stat-label">Awaiting</div></div>
+            <div class="digest-stat"><div class="stat-value">3.2d</div><div class="stat-label">Avg response</div></div>
+          </div>
+          <div class="bars-card">
+            <h4>Cohort risk overview</h4>
+            <p class="bars-caption">200L = harder transition stage, not advisor performance.</p>
+            <div class="level-bar-row"><span class="level-tag">100L</span><div class="level-track"><div class="level-fill" style="width:18%;background:var(--risk-low)"></div></div><span class="level-pct">18%</span></div>
+            <div class="level-bar-row"><span class="level-tag">200L</span><div class="level-track"><div class="level-fill" style="width:34%;background:var(--risk-med)"></div></div><span class="level-pct">34%</span></div>
+            <div class="level-bar-row"><span class="level-tag">300L</span><div class="level-track"><div class="level-fill" style="width:22%;background:var(--risk-med)"></div></div><span class="level-pct">22%</span></div>
+            <div class="level-bar-row"><span class="level-tag">400L</span><div class="level-track"><div class="level-fill" style="width:12%;background:var(--risk-low)"></div></div><span class="level-pct">12%</span></div>
+          </div>
+        </div>
+        <div class="m-bottomnav">
+          <div class="bn-item active"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Overview</div>
+          <div class="bn-item"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.3"/><path d="M15.5 14.2c2.6.4 4.5 2.4 4.5 5.3"/></svg></span>Coverage</div>
+          <div class="bn-item"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M6 10a6 6 0 0112 0c0 4 1.5 5.5 1.5 5.5H4.5S6 14 6 10z"/><path d="M10 19a2 2 0 004 0"/></svg></span>Escalations</div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     8. OUTREACH COVERAGE
+========================================================= -->
+<section id="outreach-coverage" class="screen-section">
+  <div class="screen-head"><span class="screen-num">08</span><h2 class="screen-title">Outreach coverage</h2><span class="role-badge hod">Coordinator · HOD</span></div>
+  <p class="rationale"><b>Desktop:</b> a plain table, one row per advisor. <b>Mobile:</b> the same data as stacked cards — a table would force horizontal scrolling or unreadable truncation on a phone. Note the language: "may need support," never a rank, score, or red flag on the advisor's name — the students are flagged, the advisors are supported.</p>
+
+  <div class="mockups-row">
+    <div class="mockup-col">
+      <div class="mockup-label">Desktop</div>
+      <div class="app-desktop">
+        <div class="app-sidebar">
+          <div class="logo"><div class="logo-mark">P</div>PredictEd</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Overview</div>
+          <div class="nav-item active"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.3"/><path d="M15.5 14.2c2.6.4 4.5 2.4 4.5 5.3"/></svg></span>Outreach coverage</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><path d="M6 10a6 6 0 0112 0c0 4 1.5 5.5 1.5 5.5H4.5S6 14 6 10z"/><path d="M10 19a2 2 0 004 0"/></svg></span>Escalations</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1.2l2-1.5-2-3.4-2.3.9a7 7 0 00-2-1.2L14 3h-4l-.6 2.6a7 7 0 00-2 1.2l-2.3-.9-2 3.4 2 1.5A7 7 0 005 12a7 7 0 00.1 1.2l-2 1.5 2 3.4 2.3-.9c.6.5 1.3.9 2 1.2L10 21h4l.6-2.6c.7-.3 1.4-.7 2-1.2l2.3.9 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg></span>Settings</div>
+        </div>
+        <div class="app-main">
+          <div class="app-body">
+            <div class="cohort-head"><h2>Outreach coverage</h2><p>Capacity across your department's advisors — not a leaderboard.</p></div>
+            <table class="cov-table">
+              <tr><th>Advisor</th><th>Cohort</th><th>Size</th><th>Flagged</th><th>Awaiting &gt;7 days</th><th>Status</th></tr>
+              <tr><td>Priya Menon</td><td>CS · 200L</td><td>38</td><td>9</td><td>2</td><td><span class="ontrack-note">On track</span></td></tr>
+              <tr><td>Daniel Kim</td><td>CS · 100L</td><td>52</td><td>14</td><td>6</td><td><span class="support-note">May need support</span></td></tr>
+              <tr><td>Grace Undie</td><td>CS · 300L</td><td>30</td><td>6</td><td>0</td><td><span class="ontrack-note">On track</span></td></tr>
+              <tr><td>Samuel Otu</td><td>CS · 400L</td><td>25</td><td>4</td><td>1</td><td><span class="ontrack-note">On track</span></td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mockup-col">
+      <div class="mockup-label">Mobile</div>
+      <div class="app-mobile"><div class="app-mobile-inner">
+        <div class="m-topbar"><span class="icon"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><div style="font-size:12px;font-weight:700;">Outreach coverage</div><span style="width:16px"></span></div>
+        <div class="m-content">
+          <div class="m-student-card">
+            <div class="m-row1"><div class="avatar-circle">PM</div><div><div class="student-name">Priya Menon</div><div class="student-meta">CS · 200L · 38 students</div></div></div>
+            <div class="m-row4"><span style="font-size:11.5px;color:var(--text-soft)">9 flagged · 2 awaiting</span><span class="ontrack-note">On track</span></div>
+          </div>
+          <div class="m-student-card">
+            <div class="m-row1"><div class="avatar-circle">DK</div><div><div class="student-name">Daniel Kim</div><div class="student-meta">CS · 100L · 52 students</div></div></div>
+            <div class="m-row4"><span style="font-size:11.5px;color:var(--text-soft)">14 flagged · 6 awaiting</span><span class="support-note">May need support</span></div>
+          </div>
+          <div class="m-student-card">
+            <div class="m-row1"><div class="avatar-circle">GU</div><div><div class="student-name">Grace Undie</div><div class="student-meta">CS · 300L · 30 students</div></div></div>
+            <div class="m-row4"><span style="font-size:11.5px;color:var(--text-soft)">6 flagged · 0 awaiting</span><span class="ontrack-note">On track</span></div>
+          </div>
+        </div>
+        <div class="m-bottomnav">
+          <div class="bn-item"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Overview</div>
+          <div class="bn-item active"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.3"/><path d="M15.5 14.2c2.6.4 4.5 2.4 4.5 5.3"/></svg></span>Coverage</div>
+          <div class="bn-item"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M6 10a6 6 0 0112 0c0 4 1.5 5.5 1.5 5.5H4.5S6 14 6 10z"/><path d="M10 19a2 2 0 004 0"/></svg></span>Escalations</div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     9. ESCALATIONS
+========================================================= -->
+<section id="escalations" class="screen-section">
+  <div class="screen-head"><span class="screen-num">09</span><h2 class="screen-title">Escalations</h2><span class="role-badge hod">Coordinator · HOD</span></div>
+  <p class="rationale"><b>Desktop &amp; mobile</b> share the same card-row pattern used on the advisor dashboard, for continuity across roles — flags unactioned 14+ days reach this list automatically (a 7-day reminder goes to the advisor first, quietly, before it ever surfaces here). The only control is <b>Message advisor</b> — never a student action, and never automated escalation beyond this point; the HOD decides whether to act.</p>
+
+  <div class="mockups-row">
+    <div class="mockup-col">
+      <div class="mockup-label">Desktop</div>
+      <div class="app-desktop">
+        <div class="app-sidebar">
+          <div class="logo"><div class="logo-mark">P</div>PredictEd</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Overview</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.3"/><path d="M15.5 14.2c2.6.4 4.5 2.4 4.5 5.3"/></svg></span>Outreach coverage</div>
+          <div class="nav-item active"><span class="icon"><svg viewBox="0 0 24 24"><path d="M6 10a6 6 0 0112 0c0 4 1.5 5.5 1.5 5.5H4.5S6 14 6 10z"/><path d="M10 19a2 2 0 004 0"/></svg></span>Escalations</div>
+          <div class="nav-item"><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1.2l2-1.5-2-3.4-2.3.9a7 7 0 00-2-1.2L14 3h-4l-.6 2.6a7 7 0 00-2 1.2l-2.3-.9-2 3.4 2 1.5A7 7 0 005 12a7 7 0 00.1 1.2l-2 1.5 2 3.4 2.3-.9c.6.5 1.3.9 2 1.2L10 21h4l.6-2.6c.7-.3 1.4-.7 2-1.2l2.3.9 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg></span>Settings</div>
+        </div>
+        <div class="app-main">
+          <div class="app-body">
+            <div class="cohort-head"><h2>Escalations</h2><p>Unactioned 14+ days · reminded advisor at day 7</p></div>
+            <div class="esc-row">
+              <div class="avatar-circle">IS</div>
+              <div class="student-id-col"><div class="student-name">Ibrahim Sule</div><div class="student-meta">CS · 200L · Advisor: Priya Menon</div></div>
+              <span class="esc-days">16 days unactioned</span>
+              <button class="btn-secondary btn-sm row-action"><span class="icon icon-sm" style="margin-right:5px;"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H8l-5 4V6a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>Message advisor</button>
+            </div>
+            <div class="esc-row">
+              <div class="avatar-circle">BO</div>
+              <div class="student-id-col"><div class="student-name">Blessing Okafor</div><div class="student-meta">CS · 100L · Advisor: Daniel Kim</div></div>
+              <span class="esc-days">21 days unactioned</span>
+              <button class="btn-secondary btn-sm row-action"><span class="icon icon-sm" style="margin-right:5px;"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H8l-5 4V6a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>Message advisor</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mockup-col">
+      <div class="mockup-label">Mobile</div>
+      <div class="app-mobile"><div class="app-mobile-inner">
+        <div class="m-topbar"><span class="icon"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span><div style="font-size:12px;font-weight:700;">Escalations</div><span style="width:16px"></span></div>
+        <div class="m-content">
+          <div class="m-student-card">
+            <div class="m-row1"><div class="avatar-circle">IS</div><div><div class="student-name">Ibrahim Sule</div><div class="student-meta">CS 200L · Priya Menon</div></div></div>
+            <div class="m-row4"><span class="esc-days">16 days</span></div>
+            <button class="btn-secondary btn-sm btn-block">Message advisor</button>
+          </div>
+          <div class="m-student-card">
+            <div class="m-row1"><div class="avatar-circle">BO</div><div><div class="student-name">Blessing Okafor</div><div class="student-meta">CS 100L · Daniel Kim</div></div></div>
+            <div class="m-row4"><span class="esc-days">21 days</span></div>
+            <button class="btn-secondary btn-sm btn-block">Message advisor</button>
+          </div>
+        </div>
+        <div class="m-bottomnav">
+          <div class="bn-item"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Overview</div>
+          <div class="bn-item"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.3"/><path d="M15.5 14.2c2.6.4 4.5 2.4 4.5 5.3"/></svg></span>Coverage</div>
+          <div class="bn-item active"><span class="icon icon-sm"><svg viewBox="0 0 24 24"><path d="M6 10a6 6 0 0112 0c0 4 1.5 5.5 1.5 5.5H4.5S6 14 6 10z"/><path d="M10 19a2 2 0 004 0"/></svg></span>Escalations</div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+</body>
+</html>
