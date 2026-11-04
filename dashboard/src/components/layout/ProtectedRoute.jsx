@@ -9,8 +9,7 @@ export default function ProtectedRoute({ allowedRoles }) {
   }
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {
-    const fallback = user.role === "coordinator" ? "/coordinator" : "/dashboard";
-    return <Navigate to={fallback} replace />;
+    return <Navigate to="/" replace />;
   }
 
   return <Outlet />;

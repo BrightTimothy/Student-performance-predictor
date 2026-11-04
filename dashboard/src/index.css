@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
+/*
+  Tokens ported 1:1 from docs/predicted-wireframe-reference/tokens.css.
+  Values and names are preserved exactly — see that file's comments for
+  the usage rules (risk colors are dots/pills/bar-fills only, never a row
+  background; neutral is reserved for the bursary chip only).
+*/
 @theme {
-  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-  --color-bg: #f7f5f2;
-  --color-surface: #ffffff;
-  --color-ink: #3a3f47;
-  --color-ink-muted: #767c85;
-  --color-border: #e7e2da;
+  /* Surface & background */
+  --color-bg: #faf8f3;
+  --color-card: #ffffff;
+  --color-border: #e8e3d9;
+  --color-border-soft: #f0ece3;
 
-  --color-accent: #1d4e7c;
-  --color-accent-hover: #163d63;
+  /* Text */
+  --color-text: #33302b;
+  --color-text-soft: #79746c;
+  --color-text-faint: #afa99d;
 
-  --color-risk-critical: #c4695e;
-  --color-risk-amber: #d9a441;
-  --color-risk-green: #7a9b5e;
+  /* Accent — the ONE calm blue */
+  --color-accent: #4f6fcb;
+  --color-accent-soft: #eef1fb;
+  --color-accent-dark: #3e58a8;
+
+  /* Risk colors — muted only. Small dots, status-chip backgrounds, or thin
+     bar fills. NEVER a full row/card background wash. */
+  --color-risk-high: #c97b72;
+  --color-risk-high-bg: #fbeeec;
+  --color-risk-med: #c99a4a;
+  --color-risk-med-bg: #fbf3e1;
+  --color-risk-low: #6e9e79;
+  --color-risk-low-bg: #eaf3ec;
+
+  /* Neutral — reserved for the bursary-clearance chip only. Must always
+     read quieter than the risk colors above. */
+  --color-neutral-bg: #f1ede4;
+  --color-neutral-text: #8a8478;
+
+  /* Radius */
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-sm: 7px;
+
+  /* Shadow — deliberately soft, no hard drop shadows anywhere */
+  --shadow-soft: 0 1px 2px rgba(40, 35, 25, 0.05), 0 4px 16px rgba(40, 35, 25, 0.04);
 }
 
 body {
   margin: 0;
   background: var(--color-bg);
-  color: var(--color-ink);
+  color: var(--color-text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }

@@ -1,44 +1,46 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { departmentsInScope } from "../data/mockOrg";
-import { getDepartmentOverview } from "../services/coordinatorService";
+import * as coordinatorService from "../services/coordinatorService";
 import SummaryCard from "../components/SummaryCard";
-import TrendChart from "../components/TrendChart";
+import FlagsOverTimeCard from "../components/FlagsOverTimeCard";
+import CohortRiskOverviewCard from "../components/CohortRiskOverviewCard";
 
 export default function CoordinatorOverview() {
   const { user } = useAuth();
   const [overview, setOverview] = useState(null);
 
   useEffect(() => {
-    getDepartmentOverview(departmentsInScope(user)).then(setOverview);
-  }, [user]);
+    coordinatorService.getDepartmentOverview(user.departmentId).then(setOverview);
+  }, [user.departmentId]);
 
   if (!overview) {
-    return <p className="text-ink-muted text-sm">Loading overview…</p>;
+    return <p className="text-text-soft text-sm">Loading department overview…</p>;
   }
 
+  const avgResponseLabel = `${overview.avgResponseDays.toFixed(1)}d`;
+
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold text-ink">{user.scopeName}</h1>
-        <p className="text-ink-muted mt-1">
-          Visibility into student support across every level in this{" "}
-          {user.scope === "college" ? "college" : "department"}.
+    <div>
+      <div className="mb-5">
+        <h1 className="text-2xl font-extrabold text-text mb-0.5">{overview.departmentName} Department</h1>
+        <p className="text-sm text-text-soft">
+          {overview.levelCount} levels · {overview.advisorCount} advisors · {overview.studentCount} students
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <SummaryCard label="Students flagged this term" value={overview.flaggedThisTerm} />
-        <SummaryCard label="Outreach rate" value={`${overview.outreachRate}%`} />
-        <SummaryCard label="Students improved after outreach" value={overview.improved} />
-        <SummaryCard label="Awaiting outreach 14+ days" value={overview.awaiting14Plus} />
+      <div className="flex gap-4 mb-6">
+        <SummaryCard label="Total flagged" value={overview.totalFlagged} valueClassName="text-risk-high" />
+        <SummaryCard
+          label="Awaiting outreach"
+          value={overview.awaitingOutreach}
+          valueClassName="text-risk-med"
+        />
+        <SummaryCard label="Avg. response time" value={avgResponseLabel} />
       </div>
 
-      <div className="bg-surface border border-border rounded-2xl p-5">
-        <h2 className="text-sm font-medium text-ink mb-4">
-          Flags raised vs. contacted vs. improved
-        </h2>
-        <TrendChart data={overview.trend} />
+      <div className="flex flex-col gap-5">
+        <FlagsOverTimeCard points={overview.trend} />
+        <CohortRiskOverviewCard levels={overview.levelBreakdown} />
       </div>
     </div>
   );

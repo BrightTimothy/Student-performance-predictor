@@ -1,137 +1,119 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import Logo from "../components/Logo";
 
-const DEMO_ACCOUNTS = [
-  { email: "advisor@predicted.demo", label: "Advisor · CS 200 Level" },
-  { email: "hod@predicted.demo", label: "HOD · Computer Science" },
+const ROLE_TABS = [
+  { key: "advisor", label: "Advisor", heading: "Advisor login", demoEmail: "advisor@predicted.demo" },
+  { key: "coordinator", label: "Coordinator (HOD)", heading: "Coordinator login", demoEmail: "hod@predicted.demo" },
 ];
 
 export default function Login() {
   const { signIn, isLoading } = useAuth();
   const navigate = useNavigate();
+  const [activeRole, setActiveRole] = useState("advisor");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState(null);
+
+  const activeTab = ROLE_TABS.find((tab) => tab.key === activeRole);
+
+  function handleRoleChange(role) {
+    setActiveRole(role);
+    setFormError(null);
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
     setFormError(null);
     try {
-      const user = await signIn(email, password);
-      navigate(user.role === "coordinator" ? "/coordinator" : "/dashboard");
+      await signIn(email, password);
+      navigate("/");
     } catch (err) {
       setFormError(err.message);
     }
   }
 
-  function fillDemoAccount(demoEmail) {
-    setEmail(demoEmail);
-    setPassword("demopassword");
-    setFormError(null);
-  }
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bg p-6">
-      <div className="w-full max-w-4xl flex rounded-2xl overflow-hidden border border-border shadow-sm">
-        <div className="hidden md:flex w-2/5 shrink-0 flex-col bg-accent px-10 py-10 text-white">
-          <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-white/15 flex items-center justify-center">
-              <span className="h-2.5 w-2.5 rounded-full bg-white" />
-            </div>
-            <span className="font-semibold">PredictEd</span>
-          </div>
-
-          <div className="flex-1 flex flex-col justify-center">
-            <h1 className="font-serif text-4xl leading-tight mb-4">No student unseen.</h1>
-            <p className="text-white/80 leading-relaxed">
-              We know before the grades do — so you can reach the students who need
-              you, while there's still time to help.
-            </p>
-          </div>
+    <div className="min-h-screen flex items-center justify-center bg-[linear-gradient(180deg,#FBF9F4,#F1EEE6)]">
+      <div className="w-[420px] bg-card border border-border rounded-lg shadow-soft px-10 py-10">
+        <div className="flex flex-col items-center mb-2">
+          <Logo size="lg" />
         </div>
 
-        <div className="flex-1 bg-surface flex items-center justify-center px-8 py-10 sm:px-12">
-          <div className="w-full max-w-sm">
-            <h2 className="text-xl font-semibold text-ink mb-1">Welcome back</h2>
-            <p className="text-sm text-ink-muted mb-6">
-              Sign in to your <span className="text-ink font-medium">PredictEd</span> account.
+        <p className="text-base text-text-soft text-center italic mt-1 mb-6">
+          "We know before the grades do."
+        </p>
+
+        <div className="flex gap-2 mb-6">
+          {ROLE_TABS.map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() => handleRoleChange(tab.key)}
+              className={`flex-1 text-sm font-semibold px-3.5 py-2 rounded-md border transition-colors ${
+                activeRole === tab.key
+                  ? "bg-accent border-accent text-white"
+                  : "bg-card border-border text-text-soft hover:border-text-faint"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <h1 className="text-base font-bold text-text mb-4">{activeTab.heading}</h1>
+
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="email" className="block text-base font-bold text-text-soft mb-2">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder={activeTab.demoEmail}
+            className="w-full rounded-[8px] border border-border bg-[#FCFBF8] px-4 py-3.5 text-base text-text placeholder:text-text-faint mb-4 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
+          />
+
+          <label htmlFor="password" className="block text-base font-bold text-text-soft mb-2">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••••"
+            className="w-full rounded-[8px] border border-border bg-[#FCFBF8] px-4 py-3.5 text-base text-text placeholder:text-text-faint mb-4 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
+          />
+
+          {formError && (
+            <p className="text-sm text-risk-high mb-4" role="alert">
+              {formError}
             </p>
+          )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="email" className="block text-sm text-ink-muted mb-1">
-                  Email
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-lg border border-border bg-white px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
-                />
-              </div>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full rounded-[8px] bg-accent text-white text-base font-bold py-3 mt-2 hover:bg-accent-dark transition-colors disabled:opacity-60"
+          >
+            {isLoading ? "Logging in…" : "Log in"}
+          </button>
+        </form>
 
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label htmlFor="password" className="block text-sm text-ink-muted">
-                    Password
-                  </label>
-                  <a href="#" className="text-sm text-accent hover:underline">
-                    Forgot password?
-                  </a>
-                </div>
-                <input
-                  id="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-lg border border-border bg-white px-3 py-2 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent"
-                />
-              </div>
-
-              {formError && (
-                <p className="text-sm text-risk-critical" role="alert">
-                  {formError}
-                </p>
-              )}
-
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full rounded-lg bg-accent text-white text-sm font-medium py-2.5 hover:bg-accent-hover transition-colors disabled:opacity-60"
-              >
-                {isLoading ? "Signing in…" : "Sign in"}
-              </button>
-            </form>
-
-            <div className="mt-6 rounded-xl border border-border p-4">
-              <p className="text-xs font-medium tracking-wide text-ink-muted mb-2">
-                DEMO ACCOUNTS
-              </p>
-              <div className="space-y-2">
-                {DEMO_ACCOUNTS.map((acct) => (
-                  <button
-                    key={acct.email}
-                    type="button"
-                    onClick={() => fillDemoAccount(acct.email)}
-                    className="w-full flex items-center justify-between text-left"
-                  >
-                    <span className="text-sm text-accent font-medium hover:underline">
-                      {acct.email}
-                    </span>
-                    <span className="text-xs text-ink-muted">{acct.label} →</span>
-                  </button>
-                ))}
-              </div>
-              <p className="text-xs text-ink-muted/80 mt-3">
-                Tap an account to fill the form, then Sign in. Prototype convenience —
-                not a production feature.
-              </p>
-            </div>
-          </div>
+        <div className="text-sm text-text-faint text-center mt-5 bg-neutral-bg rounded-[8px] px-4 py-3">
+          Demo accounts
+          <br />
+          Advisor: advisor@predicted.demo
+          <br />
+          Coordinator: hod@predicted.demo
+          <br />
+          password: demo1234
         </div>
       </div>
     </div>

@@ -1,16 +1,11 @@
-const STYLES = {
-  "Needs outreach": "bg-[#F1ECE4] text-ink-muted",
-  Contacted: "bg-[#EAF0EC] text-[#4C6B54]",
-  Resolved: "bg-[#E9EEF3] text-[#39597A]",
-};
+import { statusChipClass } from "../utils/riskHelpers";
 
-export default function StatusChip({ status, className = "" }) {
-  const style = STYLES[status] ?? "bg-[#F1ECE4] text-ink-muted";
+export default function StatusChip({ status, label, className = "" }) {
   return (
     <span
-      className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${style} ${className}`}
+      className={`inline-flex items-center justify-center w-24 rounded-full px-3 py-1 text-xs font-bold whitespace-nowrap ${statusChipClass(status)} ${className}`}
     >
-      {status}
+      {label ?? status}
     </span>
   );
 }

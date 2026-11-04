@@ -1,203 +1,182 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import * as studentsService from "../services/studentsService";
-import { predictRisk } from "../services/api";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import * as studentsService from "../services/studentsService";
+import { getDepartmentById } from "../data/mockOrg";
 import BursaryChip from "../components/BursaryChip";
 import RiskGauge from "../components/RiskGauge";
-import ReasonBar from "../components/ReasonBar";
-import EngagementChart from "../components/EngagementChart";
-import InterventionTimeline from "../components/InterventionTimeline";
+import ReasonBarsCard from "../components/ReasonBarsCard";
+import EngagementTrendCard from "../components/EngagementTrendCard";
+import InterventionLogCard from "../components/InterventionLogCard";
+import LogInterventionPanel from "../components/LogInterventionPanel";
+import Toast from "../components/Toast";
 import { initials } from "../utils/text";
-import { ADVISORS, cohortLabel } from "../data/mockOrg";
+
+const TOAST_DURATION_MS = 3000;
 
 export default function StudentProfile() {
   const { id } = useParams();
   const { user } = useAuth();
-  const isAdvisor = user.role === "advisor";
-  const [student, setStudent] = useState(null);
-  const [prediction, setPrediction] = useState(null);
-  const [predictionError, setPredictionError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
-  async function refresh() {
-    const data = await studentsService.getStudentById(id);
-    setStudent(data);
-    setIsLoading(false);
+  const [student, setStudent] = useState(null);
+  const [log, setLog] = useState([]);
+  const [trend, setTrend] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showLogPanel, setShowLogPanel] = useState(false);
+  const [isSavingIntervention, setIsSavingIntervention] = useState(false);
+  const [isMarkingResolved, setIsMarkingResolved] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
+
+  function refreshStudent() {
+    return studentsService.getStudentById(id).then(setStudent);
+  }
+
+  function refreshLog() {
+    return studentsService.getStudentLog(id, user.name).then(setLog);
   }
 
   useEffect(() => {
-    refresh();
+    setIsLoading(true);
+    studentsService.getStudentById(id).then((data) => {
+      setStudent(data);
+      setIsLoading(false);
+    });
+    refreshLog();
+    studentsService.getEngagementTrend(id).then(setTrend);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, user.name]);
 
-  useEffect(() => {
-    if (!student) return;
-    let cancelled = false;
-    setPredictionError(null);
-    setPrediction(null);
-    predictRisk(student.features)
-      .then((result) => {
-        if (!cancelled) setPrediction(result);
-      })
-      .catch((err) => {
-        if (!cancelled) setPredictionError(err.message);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [student]);
+  function showToast(message) {
+    setToastMessage(message);
+    setTimeout(() => setToastMessage(null), TOAST_DURATION_MS);
+  }
 
-  async function handleResolve() {
-    await studentsService.updateStudentStatus(user.role, id, "Resolved");
-    refresh();
+  async function handleSaveIntervention({ type, notes }) {
+    setIsSavingIntervention(true);
+    await studentsService.addIntervention(id, { type, notes });
+    await Promise.all([refreshStudent(), refreshLog()]);
+    setIsSavingIntervention(false);
+    setShowLogPanel(false);
+    showToast("Saved — marked as contacted");
+  }
+
+  async function handleMarkResolved() {
+    setIsMarkingResolved(true);
+    await studentsService.markResolved(id);
+    await Promise.all([refreshStudent(), refreshLog()]);
+    setIsMarkingResolved(false);
+    showToast("Marked as resolved");
+  }
+
+  function handleSendEmail() {
+    showToast(`Email drafted to ${student.name.split(" ")[0]}`);
   }
 
   if (isLoading) {
-    return <p className="text-ink-muted text-sm">Loading student…</p>;
+    return <p className="text-text-soft text-sm">Loading student…</p>;
   }
 
   if (!student) {
-    return <p className="text-ink-muted text-sm">Student not found.</p>;
+    return <p className="text-text-soft text-sm">Student not found.</p>;
   }
 
+  const levelShort = student.level.replace(" Level", "L");
+  const departmentName = getDepartmentById(student.departmentId)?.name ?? "";
+
   return (
-    <div className="space-y-6">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <div className="h-14 w-14 rounded-full bg-[#EAE6DF] text-ink flex items-center justify-center text-lg font-medium shrink-0">
-            {initials(student.name)}
+    <div>
+      <button
+        onClick={() => navigate("/")}
+        className="flex items-center gap-1.5 text-sm font-bold text-text mb-6 hover:text-accent-dark transition-colors"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          className="h-4 w-4 stroke-current fill-none"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+        Back to dashboard
+      </button>
+
+      <div className="flex gap-8 items-start">
+        <div className="w-64 shrink-0">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="h-12 w-12 rounded-full bg-accent-soft text-accent-dark flex items-center justify-center text-base font-bold shrink-0">
+              {initials(student.name)}
+            </div>
+            <div className="min-w-0">
+              <div className="text-lg font-extrabold text-text truncate">{student.name}</div>
+              <div className="text-xs text-text-faint truncate">{student.studentId}</div>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl font-semibold text-ink">{student.name}</h1>
-            <p className="text-sm text-ink-muted mt-0.5">
-              {student.studentId} · {cohortLabel(student.departmentId, student.level)}
-            </p>
-            {student.carriedFrom && (
-              <p className="text-xs text-ink-muted/80 mt-0.5">
-                Registered {student.level} · carrying course(s) from {student.carriedFrom}
-              </p>
-            )}
-          </div>
-        </div>
-        <div>
+          <p className="text-xs text-text-soft mb-4">
+            {departmentName}, {levelShort}
+          </p>
+
           <BursaryChip cleared={student.bursaryCleared} />
-          {!student.bursaryCleared && (
-            <p className="text-xs text-ink-muted mt-1 max-w-[16rem] text-right">
-              Consider referring to bursary support.
-            </p>
-          )}
-        </div>
-      </div>
 
-      <div className="flex flex-wrap gap-3">
-        {isAdvisor ? (
-          <>
-            <Link
-              to={`/students/${student.id}/intervention`}
-              className="rounded-lg bg-accent text-white text-sm font-medium px-4 py-2 hover:bg-accent-hover transition-colors"
-            >
-              Log intervention
-            </Link>
-            <a
-              href={`mailto:?subject=Checking in&body=Hi ${student.name.split(" ")[0]},`}
-              className="rounded-lg border border-border text-sm font-medium px-4 py-2 text-ink hover:border-accent hover:text-accent transition-colors"
-            >
-              Send email
-            </a>
-            {student.status !== "Resolved" && (
-              <button
-                onClick={handleResolve}
-                className="rounded-lg border border-border text-sm font-medium px-4 py-2 text-ink hover:border-accent hover:text-accent transition-colors"
-              >
-                Mark resolved
-              </button>
-            )}
-          </>
-        ) : (
-          (() => {
-            const advisor = ADVISORS.find((a) => a.id === student.advisorId);
-            const subject = encodeURIComponent(`Following up on ${student.name}`);
-            const body = encodeURIComponent(
-              `Hi ${advisor?.name.split(" ")[0] ?? "there"},\n\nCould you give me an update on ${student.name} (${student.studentId})? I saw they're flagged and wanted to check how things are going.\n\nThanks,\n${user.name}`
-            );
-            return (
-              <a
-                href={`mailto:${advisor?.email ?? ""}?subject=${subject}&body=${body}`}
-                className="rounded-lg bg-accent text-white text-sm font-medium px-4 py-2 hover:bg-accent-hover transition-colors"
-              >
-                Message advisor
-              </a>
-            );
-          })()
-        )}
-      </div>
+          {/* Coordinators see everything on this page but act on nothing —
+              these actions are advisor-only. This guard is the actual
+              enforcement point; don't rely on there being no link to this
+              page for the HOD role, since that's incidental, not a guarantee. */}
+          {user.role === "advisor" && (
+            <div className="mt-6">
+              <div className="text-xs font-bold text-text-soft uppercase tracking-wide mb-2.5">
+                Actions
+              </div>
+              <div className="flex flex-col gap-2.5">
+                <button
+                  onClick={() => setShowLogPanel(true)}
+                  className="rounded-md border border-border bg-card px-4 py-2.5 text-sm font-bold text-text hover:border-accent hover:text-accent-dark transition-colors"
+                >
+                  Log intervention
+                </button>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-surface border border-border rounded-2xl p-5">
-          <h2 className="text-sm font-medium text-ink-muted mb-4">Risk</h2>
-          {predictionError && (
-            <p className="text-sm text-risk-critical">
-              Couldn't reach the prediction service: {predictionError}
-            </p>
-          )}
-          {!predictionError && !prediction && (
-            <p className="text-sm text-ink-muted">Scoring student…</p>
-          )}
-          {prediction && (
-            <div className="flex items-center gap-6">
-              <RiskGauge score={prediction.risk_score} tier={prediction.risk_tier} />
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between gap-6">
-                  <span className="text-ink-muted">Days since last login</span>
-                  <span className="text-ink font-medium">{student.lastLoginDaysAgo}</span>
-                </div>
-                <div className="flex justify-between gap-6">
-                  <span className="text-ink-muted">Active days this term</span>
-                  <span className="text-ink font-medium">{student.features.num_active_days}</span>
-                </div>
-                <div className="flex justify-between gap-6">
-                  <span className="text-ink-muted">Submissions</span>
-                  <span className="text-ink font-medium">{student.features.number_of_takes}</span>
-                </div>
+                <button
+                  onClick={handleSendEmail}
+                  className="rounded-md border border-border bg-card px-4 py-2.5 text-sm font-bold text-text hover:border-accent hover:text-accent-dark transition-colors"
+                >
+                  Send email
+                </button>
+
+                <button
+                  onClick={handleMarkResolved}
+                  disabled={isMarkingResolved || student.status === "Resolved"}
+                  className="rounded-md bg-accent text-white px-4 py-2.5 text-sm font-bold hover:bg-accent-dark transition-colors disabled:opacity-60"
+                >
+                  {isMarkingResolved
+                    ? "Marking resolved…"
+                    : student.status === "Resolved"
+                      ? "Resolved"
+                      : "Mark resolved"}
+                </button>
               </div>
             </div>
           )}
         </div>
 
-        <div className="bg-surface border border-border rounded-2xl p-5">
-          <h2 className="text-sm font-medium text-ink-muted mb-4">Engagement this term</h2>
-          <EngagementChart data={student.engagementTrend} />
-        </div>
-
-        <div className="bg-surface border border-border rounded-2xl p-5">
-          <h2 className="text-sm font-medium text-ink mb-0.5">Why flagged</h2>
-          <p className="text-xs text-ink-muted mb-4">Based on academic signals only</p>
-          {predictionError && (
-            <p className="text-sm text-ink-muted">Unavailable right now.</p>
-          )}
-          {!predictionError && !prediction && (
-            <p className="text-sm text-ink-muted">Loading reasons…</p>
-          )}
-          {prediction && (
-            <div className="space-y-3">
-              {prediction.top_reasons.map((reason, i) => (
-                <ReasonBar
-                  key={reason.feature}
-                  feature={reason.feature}
-                  impact={reason.impact}
-                  rank={i}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="bg-surface border border-border rounded-2xl p-5">
-          <h2 className="text-sm font-medium text-ink mb-4">Intervention log</h2>
-          <InterventionTimeline interventions={student.interventions} />
+        <div className="flex-1 min-w-0 flex flex-col gap-5">
+          <RiskGauge tier={student.riskTier} score={student.riskScore} />
+          <ReasonBarsCard reasons={student.reasons} />
+          <EngagementTrendCard points={trend} />
+          <InterventionLogCard entries={log} />
         </div>
       </div>
+
+      {showLogPanel && (
+        <LogInterventionPanel
+          student={student}
+          isSaving={isSavingIntervention}
+          onCancel={() => setShowLogPanel(false)}
+          onSave={handleSaveIntervention}
+        />
+      )}
+
+      <Toast message={toastMessage} />
     </div>
   );
 }

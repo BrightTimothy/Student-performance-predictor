@@ -1,118 +1,122 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import * as studentsService from "../services/studentsService";
 import SummaryCard from "../components/SummaryCard";
 import FilterBar from "../components/FilterBar";
 import StudentRow from "../components/StudentRow";
-import { tierRank, needsAttention } from "../utils/riskHelpers";
+import NeedsAttentionCard from "../components/NeedsAttentionCard";
+import RecentActivityCard from "../components/RecentActivityCard";
+import { APPROACHING_THRESHOLD_DAYS, OVERDUE_THRESHOLD_DAYS, tierRank } from "../utils/riskHelpers";
 import { daysSince } from "../utils/date";
 
-const DEFAULT_FILTERS = { risk: "all", status: "all" };
+const STATUS_ORDER = { Flagged: 0, Contacted: 1, Resolved: 2 };
 
-function greeting() {
-  const hour = new Date().getHours();
-  if (hour < 12) return "Good morning";
-  if (hour < 18) return "Good afternoon";
-  return "Good evening";
+function urgencyDays(student) {
+  if (student.status === "Flagged") return daysSince(student.flaggedDate);
+  if (student.status === "Contacted") return daysSince(student.contactedDate);
+  return -daysSince(student.resolvedDate);
 }
 
 export default function AdvisorDashboard() {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [students, setStudents] = useState([]);
+  const [activity, setActivity] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [filters, setFilters] = useState(DEFAULT_FILTERS);
-
-  async function refresh() {
-    const data = await studentsService.getStudentsByAdvisor(user.id);
-    setStudents(data);
-    setIsLoading(false);
-  }
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
-    refresh();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    studentsService.getStudentsByAdvisor(user.id).then((data) => {
+      setStudents(data);
+      setIsLoading(false);
+    });
+    studentsService.getRecentActivity(user.id).then(setActivity);
   }, [user.id]);
+
+  const counts = useMemo(() => {
+    const flagged = students.filter((s) => s.status === "Flagged" || s.status === "Contacted").length;
+    const awaitingOutreach = students.filter((s) => s.status === "Flagged").length;
+    const resolved = students.filter((s) => s.status === "Resolved").length;
+    return { flagged, awaitingOutreach, resolved };
+  }, [students]);
+
+  const approachingThreshold = useMemo(() => {
+    return students
+      .filter(
+        (s) =>
+          s.status === "Flagged" &&
+          daysSince(s.flaggedDate) >= APPROACHING_THRESHOLD_DAYS &&
+          daysSince(s.flaggedDate) < OVERDUE_THRESHOLD_DAYS
+      )
+      .sort((a, b) => daysSince(b.flaggedDate) - daysSince(a.flaggedDate));
+  }, [students]);
 
   const filtered = useMemo(() => {
     return students
       .filter((s) => {
-        if (filters.risk === "all") return true;
-        if (filters.risk === "attention") return needsAttention(s.riskTier);
-        if (filters.risk === "watch") return s.riskTier === "Watch";
-        if (filters.risk === "safe") return s.riskTier === "Safe";
-        return true;
+        if (filter === "all") return true;
+        if (filter === "awaiting") return s.status === "Flagged";
+        return s.riskTier === filter;
       })
-      .filter((s) => filters.status === "all" || s.status === filters.status)
       .sort((a, b) => {
         const rankDiff = tierRank(a.riskTier) - tierRank(b.riskTier);
         if (rankDiff !== 0) return rankDiff;
-        if (b.riskScore !== a.riskScore) return b.riskScore - a.riskScore;
-        return daysSince(b.flaggedDate) - daysSince(a.flaggedDate);
+        const statusDiff = STATUS_ORDER[a.status] - STATUS_ORDER[b.status];
+        if (statusDiff !== 0) return statusDiff;
+        return urgencyDays(b) - urgencyDays(a);
       });
-  }, [students, filters]);
-
-  const summary = useMemo(() => {
-    const needingAttention = students.filter(
-      (s) => needsAttention(s.riskTier) && s.status !== "Resolved"
-    ).length;
-    const newThisWeek = students.filter((s) => daysSince(s.flaggedDate) <= 7).length;
-    const reachedOut = students.filter(
-      (s) => s.status === "Contacted" || s.status === "Resolved"
-    ).length;
-    return { needingAttention, newThisWeek, reachedOut };
-  }, [students]);
-
-  async function handleAction(student) {
-    if (student.status === "Needs outreach") {
-      navigate(`/students/${student.id}/intervention`);
-      return;
-    }
-    if (student.status === "Contacted") {
-      await studentsService.updateStudentStatus(user.role, student.id, "Resolved");
-      refresh();
-    }
-  }
+  }, [students, filter]);
 
   if (isLoading) {
-    return <p className="text-ink-muted text-sm">Loading your cohort…</p>;
+    return <p className="text-text-soft text-sm">Loading your cohort…</p>;
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold text-ink">
-          {greeting()}, {user.name.split(" ")[0]}
-        </h1>
-        <p className="text-ink-muted mt-1">{user.cohortLabel}</p>
-        <p className="text-sm text-ink-muted mt-2">
-          {students.length} students in your cohort · {summary.needingAttention} need attention
-        </p>
-      </div>
+    <div className="flex flex-col min-[1600px]:flex-row gap-8 items-start">
+      <div className="flex-1 min-w-0 w-full">
+        <div className="mb-4">
+          <h1 className="text-2xl font-extrabold text-text mb-0.5">{user.cohortLabel}</h1>
+          <p className="text-sm text-text-soft">{user.cohortSize} students · your cohort</p>
+        </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <SummaryCard label="Students needing attention" value={summary.needingAttention} />
-        <SummaryCard label="New this week" value={summary.newThisWeek} />
-        <SummaryCard label="Reached out to" value={summary.reachedOut} />
-      </div>
+        <div className="flex gap-4 mb-5">
+          <SummaryCard label="Flagged" value={counts.flagged} valueClassName="text-risk-high" />
+          <SummaryCard
+            label="Awaiting outreach"
+            value={counts.awaitingOutreach}
+            valueClassName="text-risk-med"
+          />
+          <SummaryCard
+            label="Resolved this term"
+            value={counts.resolved}
+            valueClassName="text-risk-low"
+          />
+        </div>
 
-      <FilterBar
-        filters={filters}
-        onChange={setFilters}
-        onReset={() => setFilters(DEFAULT_FILTERS)}
-      />
+        <FilterBar value={filter} onChange={setFilter} />
 
-      <div className="space-y-2">
-        {filtered.length === 0 && (
-          <p className="text-sm text-ink-muted py-8 text-center">
-            No students match these filters.
+        <div className="flex items-center justify-between mt-5 mb-2.5">
+          <h2 className="text-sm font-bold text-text-soft uppercase tracking-wide">Ranked by risk</h2>
+        </div>
+
+        {filtered.length === 0 ? (
+          <p className="text-sm text-text-soft py-8 text-center">
+            No students match this filter.
           </p>
+        ) : (
+          <div className="overflow-x-auto">
+            <div className="min-w-[860px]">
+              {filtered.map((student) => (
+                <StudentRow key={student.id} student={student} />
+              ))}
+            </div>
+          </div>
         )}
-        {filtered.map((student) => (
-          <StudentRow key={student.id} student={student} onAction={handleAction} />
-        ))}
       </div>
+
+      <aside className="w-full grid grid-cols-2 gap-5 min-[1600px]:flex min-[1600px]:flex-col min-[1600px]:w-[400px] min-[1600px]:shrink-0 min-[1600px]:sticky min-[1600px]:top-7">
+        <NeedsAttentionCard students={approachingThreshold} />
+        <RecentActivityCard events={activity} />
+      </aside>
     </div>
   );
 }

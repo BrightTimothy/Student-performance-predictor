@@ -30,8 +30,14 @@ export function AuthProvider({ children }) {
     setError(null);
   }
 
+  // No backend to persist this to — just updates the in-memory session so
+  // the new name/email/avatar shows up everywhere that reads useAuth().
+  function updateProfile(updates) {
+    setUser((prev) => ({ ...prev, ...updates }));
+  }
+
   const value = useMemo(
-    () => ({ user, error, isLoading, signIn, signOut }),
+    () => ({ user, error, isLoading, signIn, signOut, updateProfile }),
     [user, error, isLoading]
   );
 

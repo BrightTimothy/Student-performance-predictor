@@ -1,9 +1,10 @@
-export default function SummaryCard({ label, value, sublabel }) {
+export default function SummaryCard({ label, value, valueClassName = "" }) {
   return (
-    <div className="bg-surface border border-border rounded-2xl px-5 py-4">
-      <p className="text-sm text-ink-muted">{label}</p>
-      <p className="text-2xl font-semibold text-ink mt-1">{value}</p>
-      {sublabel && <p className="text-xs text-ink-muted mt-1">{sublabel}</p>}
+    <div className="flex-1 bg-card border border-border rounded-md px-5 py-4">
+      <div className={`text-3xl font-extrabold leading-none mb-1.5 ${valueClassName}`}>
+        {value}
+      </div>
+      <div className="text-sm text-text-soft">{label}</div>
     </div>
   );
 }
