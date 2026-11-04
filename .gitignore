@@ -1,6 +1,5 @@
-#Data and raw files
-data/raw
-data/processed
+#Data: only the file too large for GitHub (100 MB limit)
+data/raw/studentVle.csv
 
 #trained models(csn be very large)
 models/*.pkl
